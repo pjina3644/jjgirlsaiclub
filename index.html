@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>숭돌이 AI</title>
+
+<style>
+
+body{
+background:#000;
+color:#00ff9c;
+font-family:monospace;
+margin:0;
+padding:20px;
+text-align:center;
+}
+
+#terminal{
+max-width:500px;
+margin:auto;
+text-align:left;
+white-space:pre-line;
+}
+
+#monkey{
+font-size:80px;
+display:none;
+margin-top:20px;
+animation:float 3s infinite ease-in-out;
+}
+
+@keyframes float{
+0%{transform:translateY(0)}
+50%{transform:translateY(-8px)}
+100%{transform:translateY(0)}
+}
+
+#chat{
+display:none;
+margin-top:20px;
+}
+
+#bubble{
+background:#001a12;
+padding:16px;
+border-radius:15px;
+min-height:60px;
+margin-bottom:15px;
+}
+
+button{
+background:#000;
+color:#00ff9c;
+border:1px solid #00ff9c;
+padding:16px;
+margin:5px;
+border-radius:16px;
+width:100%;
+font-size:16px;
+transition:0.2s;
+}
+
+button:hover{
+transform:scale(1.05);
+box-shadow:0 0 15px #00ff9c;
+}
+
+button:active{
+transform:scale(0.95);
+}
+
+#applyForm{
+display:none;
+margin-top:20px;
+}
+
+input,textarea{
+width:100%;
+padding:12px;
+margin:6px 0;
+background:#000;
+border:1px solid #00ff9c;
+color:#00ff9c;
+border-radius:10px;
+font-family:monospace;
+}
+
+#uploadTerminal{
+display:none;
+text-align:left;
+max-width:500px;
+margin:20px auto;
+white-space:pre-line;
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="terminal"></div>
+
+<div id="monkey">🐵</div>
+
+<div id="chat">
+
+<div id="bubble"></div>
+
+<button onclick="ask('intro')">동아리 소개</button>
+<button onclick="ask('plan')">동아리 활동 계획</button>
+<button onclick="ask('target')">모집 대상</button>
+<button onclick="ask('apply')">모집 안내</button>
+<button onclick="ask('etc')">기타 문의</button>
+<button onclick="openForm()">🚀 지원하기</button>
+
+</div>
+
+<div id="applyForm">
+
+<h3>지원서</h3>
+
+<input id="name" placeholder="이름">
+<input id="studentId" placeholder="학번">
+<input id="dream" placeholder="희망 진로">
+<textarea id="activity" placeholder="동아리에서 하고 싶은 활동"></textarea>
+
+<button onclick="submitForm()">제출</button>
+
+</div>
+
+<div id="uploadTerminal"></div>
+
+<script>
+
+const terminal=document.getElementById("terminal")
+
+const bootLogs=[
+"booting system...",
+"loading ai module...",
+"connecting raspberry pi...",
+"initializing robotics kit...",
+"starting Sundol AI...",
+"ERROR: monkey_ai_not_found",
+"system crash...",
+"restarting..."
+]
+
+let logIndex=0
+
+function boot(){
+
+if(logIndex<bootLogs.length){
+
+terminal.innerHTML+=bootLogs[logIndex]+"\n"
+logIndex++
+setTimeout(boot,400)
+
+}else{
+
+setTimeout(showMonkey,800)
+
+}
+
+}
+
+boot()
+
+function showMonkey(){
+
+document.getElementById("monkey").style.display="block"
+document.getElementById("chat").style.display="block"
+
+typeText("안녕 🤭 나는 너를 도와줄 원숭이 로봇 숭돌이야! 뭐가 궁금하니?")
+
+}
+
+const answers={
+
+intro:"미정",
+
+plan:"아두이노, 자율주행 자동차 키트, 사물인터넷 교구, 채팅형 AI 유료 구독권 등 다양한 활동이 있어! 외부 강사님과 팀 프로젝트도 진행할 예정이야.",
+
+target:"컴퓨터, 로봇 등 공학 관련 전공을 희망하는 학생들, 블렌더 등을 활용한 게임 디자인에 관심 있는 학생들을 모집하고 있어.",
+
+apply:"13일 면접 예정이야!",
+
+etc:"문의는 부장 20509 박진아 010-3644-0767"
+
+}
+
+function typeText(text){
+
+const bubble=document.getElementById("bubble")
+bubble.innerHTML=""
+
+let i=0
+
+const interval=setInterval(()=>{
+
+bubble.innerHTML+=text[i]
+i++
+
+if(i>=text.length)clearInterval(interval)
+
+},30)
+
+}
+
+function ask(key){
+
+const buttons=document.querySelectorAll("button")
+
+buttons.forEach(b=>b.disabled=true)
+
+typeText("숭돌이 생각중...")
+
+setTimeout(()=>{
+
+typeText(answers[key])
+buttons.forEach(b=>b.disabled=false)
+
+},1200)
+
+}
+
+function openForm(){
+
+document.getElementById("applyForm").style.display="block"
+window.scrollTo(0,document.body.scrollHeight)
+
+}
+
+function submitForm(){
+
+const upload=document.getElementById("uploadTerminal")
+upload.style.display="block"
+upload.innerHTML="Uploading application...\n"
+
+let progress=0
+
+const interval=setInterval(()=>{
+
+progress+=10
+upload.innerHTML+="█"
+
+if(progress>=100){
+
+clearInterval(interval)
+
+upload.innerHTML+="\nApplication saved\n"
+
+setTimeout(()=>{
+
+upload.innerHTML+="숭돌이: 면접에서 보자 🐵"
+
+},600)
+
+}
+
+},120)
+
+}
+
+</script>
+
+</body>
+</html>
