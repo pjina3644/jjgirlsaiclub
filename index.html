@@ -1,99 +1,54 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>동아리 지원</title>
 
-<title>숭돌이 AI - Robot & AI Club</title>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
 
 body{
-background:#000;
-color:#00ff9c;
-font-family:monospace;
+font-family: 'Pretendard', sans-serif;
+background:#f5f7fb;
 margin:0;
-padding:20px;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+
+.container{
+background:white;
+padding:50px;
+border-radius:16px;
+box-shadow:0 8px 25px rgba(0,0,0,0.08);
 text-align:center;
+width:380px;
 }
 
-#terminal{
-max-width:500px;
-margin:auto;
-text-align:left;
-white-space:pre-line;
+h1{
+margin-bottom:10px;
 }
 
-#monkey{
-font-size:90px;
-display:none;
-margin-top:20px;
-animation:float 3s infinite ease-in-out;
-}
-
-@keyframes float{
-0%{transform:translateY(0)}
-50%{transform:translateY(-8px)}
-100%{transform:translateY(0)}
-}
-
-#chat{
-display:none;
-margin-top:20px;
-}
-
-#bubble{
-background:#001a12;
-padding:16px;
-border-radius:15px;
-min-height:60px;
-margin-bottom:15px;
+p{
+color:#666;
+margin-bottom:30px;
 }
 
 button{
-background:#000;
-color:#00ff9c;
-border:1px solid #00ff9c;
-padding:16px;
-margin:5px;
-border-radius:16px;
-width:100%;
+background:#4a6cf7;
+border:none;
+color:white;
 font-size:16px;
+padding:14px 28px;
+border-radius:8px;
+cursor:pointer;
 transition:0.2s;
 }
 
 button:hover{
-transform:scale(1.05);
-box-shadow:0 0 15px #00ff9c;
-}
-
-button:active{
-transform:scale(0.95);
-}
-
-#applyForm{
-display:none;
-margin-top:20px;
-}
-
-input,textarea{
-width:100%;
-padding:12px;
-margin:6px 0;
-background:#000;
-border:1px solid #00ff9c;
-color:#00ff9c;
-border-radius:10px;
-font-family:monospace;
-}
-
-#uploadTerminal{
-display:none;
-text-align:left;
-max-width:500px;
-margin:20px auto;
-white-space:pre-line;
+background:#3451d1;
 }
 
 </style>
@@ -101,229 +56,19 @@ white-space:pre-line;
 
 <body>
 
-<div id="terminal"></div>
+<div class="container">
 
-<div id="monkey">🐵</div>
+<h1>동아리 지원</h1>
+<p>지원서를 작성하려면 아래 버튼을 눌러주세요</p>
 
-<div id="chat">
-
-<div id="bubble"></div>
-
-<button onclick="ask('intro')">동아리 소개</button>
-<button onclick="ask('plan')">동아리 활동 계획</button>
-<button onclick="ask('target')">모집 대상</button>
-<button onclick="ask('apply')">모집 안내</button>
-<button onclick="ask('etc')">기타 문의</button>
-<button onclick="openForm()">🚀 지원하기</button>
+<button onclick="goApply()">지원하기</button>
 
 </div>
 
-<div id="applyForm">
-
-<h3>지원서</h3>
-
-<input id="name" placeholder="이름">
-<input id="studentId" placeholder="학번">
-<input id="dream" placeholder="희망 진로">
-<textarea id="activity" placeholder="동아리에서 하고 싶은 활동"></textarea>
-
-<button onclick="submitForm()">제출</button>
-
-</div>
-
-<div id="uploadTerminal"></div>
-
 <script>
 
-const terminal=document.getElementById("terminal")
-
-const bootLogs=[
-"booting system...",
-"loading ai module...",
-"connecting raspberry pi...",
-"initializing robotics kit...",
-"starting Sundol AI...",
-"ERROR: monkey_ai_not_found",
-"system crash...",
-"restarting..."
-]
-
-let logIndex=0
-
-function boot(){
-
-if(logIndex<bootLogs.length){
-
-terminal.innerHTML+=bootLogs[logIndex]+"\n"
-logIndex++
-setTimeout(boot,400)
-
-}else{
-
-setTimeout(showMonkey,800)
-
-}
-
-}
-
-boot()
-
-function showMonkey(){
-
-document.getElementById("monkey").style.display="block"
-document.getElementById("chat").style.display="block"
-
-typeText("안녕 🤭 나는 너를 도와줄 원숭이 로봇 숭돌이야! 뭐가 궁금하니?")
-
-}
-
-const answers={
-
-intro:"Robot & AI Coding Club은 AI, 로봇, 코딩을 함께 배우고 프로젝트를 만드는 동아리야.",
-
-plan:"아두이노, 자율주행 자동차 키트, 사물인터넷 교구, AI 프로젝트, 외부 강사 특강 등 다양한 활동을 할 예정이야.",
-
-target:"컴퓨터, 로봇, AI, 게임개발, 공학 계열 진로를 희망하는 학생을 모집해.",
-
-apply:"면접 예정일: 13일!",
-
-etc:"문의: 20509 박진아"
-
-}
-
-function typeText(text){
-
-const bubble=document.getElementById("bubble")
-bubble.innerHTML=""
-
-let i=0
-
-const interval=setInterval(()=>{
-
-bubble.innerHTML+=text[i]
-i++
-
-if(i>=text.length)clearInterval(interval)
-
-},30)
-
-}
-
-function ask(key){
-
-const buttons=document.querySelectorAll("button")
-
-buttons.forEach(b=>b.disabled=true)
-
-typeText("숭돌이 생각중...")
-
-setTimeout(()=>{
-
-typeText(answers[key])
-buttons.forEach(b=>b.disabled=false)
-
-},1200)
-
-}
-
-function openForm(){
-
-document.getElementById("applyForm").style.display="block"
-window.scrollTo(0,document.body.scrollHeight)
-
-}
-
-async function submitForm(){
-
-const name=document.getElementById("name").value
-const studentId=document.getElementById("studentId").value
-const dream=document.getElementById("dream").value
-const activity=document.getElementById("activity").value
-
-const upload=document.getElementById("uploadTerminal")
-upload.style.display="block"
-upload.innerHTML="Uploading application...\n"
-
-let progress=0
-
-const interval=setInterval(()=>{
-
-progress+=10
-upload.innerHTML+="█"
-
-if(progress>=100){
-
-clearInterval(interval)
-
-saveData(name,studentId,dream,activity)
-
-}
-
-},120)
-
-}
-
-</script>
-
-
-<!-- Firebase -->
-
-<script type="module">
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
-import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
-
-const firebaseConfig = {
-apiKey: "AIzaSyBMquwGMX__QpGyK62NDC64EdrKnLu3Dxk",
-authDomain: "club-ca1bf.firebaseapp.com",
-projectId: "club-ca1bf",
-storageBucket: "club-ca1bf.firebasestorage.app",
-messagingSenderId: "396844667638",
-appId: "1:396844667638:web:794d61d7b21009281ed2d7",
-measurementId: "G-RXEHB4X3TW"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-window.db=db
-window.collection=collection
-window.addDoc=addDoc
-
-</script>
-
-<script>
-
-async function saveData(name,studentId,dream,activity){
-
-try{
-
-await addDoc(collection(db,"applications"),{
-
-name:name,
-studentId:studentId,
-dream:dream,
-activity:activity,
-time:new Date()
-
-})
-
-const upload=document.getElementById("uploadTerminal")
-
-upload.innerHTML+="\nApplication saved\n"
-
-setTimeout(()=>{
-
-upload.innerHTML+="숭돌이: 면접에서 보자 🐵"
-
-},600)
-
-}catch(e){
-
-console.log(e)
-
-}
-
+function goApply(){
+location.href="apply.html"
 }
 
 </script>

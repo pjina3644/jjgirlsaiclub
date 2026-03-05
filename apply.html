@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>지원서 작성</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+font-family:'Pretendard',sans-serif;
+background:#f5f7fb;
+margin:0;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+}
+
+.container{
+background:white;
+padding:40px;
+border-radius:16px;
+box-shadow:0 8px 25px rgba(0,0,0,0.08);
+width:420px;
+}
+
+h2{
+margin-bottom:20px;
+}
+
+.input-group{
+margin-bottom:18px;
+}
+
+label{
+font-weight:600;
+font-size:14px;
+display:block;
+margin-bottom:6px;
+}
+
+input, textarea{
+width:100%;
+padding:10px;
+border-radius:6px;
+border:1px solid #ddd;
+font-size:14px;
+}
+
+textarea{
+resize:none;
+height:100px;
+}
+
+button{
+width:100%;
+margin-top:10px;
+background:#4a6cf7;
+border:none;
+color:white;
+font-size:16px;
+padding:12px;
+border-radius:8px;
+cursor:pointer;
+transition:0.2s;
+}
+
+button:hover{
+background:#3451d1;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>지원서 작성</h2>
+
+<div class="input-group">
+<label>이름</label>
+<input id="name">
+</div>
+
+<div class="input-group">
+<label>학번</label>
+<input id="studentId">
+</div>
+
+<div class="input-group">
+<label>지원 동기</label>
+<textarea id="reason"></textarea>
+</div>
+
+<button onclick="submitApplication()">지원서 제출</button>
+
+</div>
+
+<!-- Firebase SDK -->
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+
+apiKey: "여기에키",
+authDomain: "여기에",
+projectId: "여기에",
+storageBucket: "여기에",
+messagingSenderId: "여기에",
+appId: "여기에"
+
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+window.submitApplication = async function(){
+
+const name = document.getElementById("name").value
+const studentId = document.getElementById("studentId").value
+const reason = document.getElementById("reason").value
+
+if(name=="" || studentId=="" || reason==""){
+alert("모든 항목을 입력해주세요")
+return
+}
+
+await addDoc(collection(db,"applications"),{
+
+name:name,
+studentId:studentId,
+reason:reason,
+time:new Date()
+
+})
+
+alert("지원 완료!")
+
+document.getElementById("name").value=""
+document.getElementById("studentId").value=""
+document.getElementById("reason").value=""
+
+}
+
+</script>
+
+</body>
+</html>
