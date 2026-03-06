@@ -4,95 +4,98 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>인공지능탐구부 지원</title>
+<title>인공지능탐구부</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
 
 body{
 margin:0;
-font-family:'Pretendard',sans-serif;
-background:linear-gradient(135deg,#0f172a,#1e293b);
-color:white;
-padding:20px;
+background:#000;
+color:#00ff9c;
+font-family:'JetBrains Mono',monospace;
+overflow-x:hidden;
+}
+
+/* 배경 코드 */
+
+#codeBackground{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+white-space:pre;
+opacity:0.18;
+font-size:12px;
+line-height:16px;
+pointer-events:none;
 }
 
 .container{
+position:relative;
+z-index:2;
+padding:25px;
+text-align:center;
+}
+
+#terminal{
+font-size:14px;
+text-align:left;
 max-width:600px;
 margin:auto;
+margin-top:20px;
+white-space:pre-line;
 }
 
-h1{
-text-align:center;
-font-size:28px;
-margin-bottom:25px;
+#monkey{
+font-size:90px;
+margin-top:20px;
+display:none;
+animation:float 3s ease-in-out infinite;
 }
 
-.monkey{
-font-size:70px;
-text-align:center;
-margin-bottom:10px;
+@keyframes float{
+0%{transform:translateY(0)}
+50%{transform:translateY(-10px)}
+100%{transform:translateY(0)}
 }
 
-form{
-display:flex;
-flex-direction:column;
-gap:15px;
+#chat{
+display:none;
+margin-top:25px;
 }
 
-label{
-font-size:15px;
-opacity:0.9;
-}
-
-input,textarea{
-width:100%;
-padding:14px;
+#bubble{
+background:#001a12;
+padding:18px;
+border-radius:15px;
+min-height:70px;
+margin-bottom:15px;
 font-size:16px;
-border-radius:10px;
-border:none;
-outline:none;
-background:#1e293b;
-color:white;
-}
-
-textarea{
-min-height:120px;
-resize:vertical;
 }
 
 button{
-margin-top:10px;
-padding:16px;
-font-size:18px;
-font-weight:600;
+width:100%;
+padding:18px;
+margin:6px 0;
 border:none;
-border-radius:12px;
-background:#3b82f6;
-color:white;
-cursor:pointer;
+border-radius:14px;
+background:#00291d;
+color:#00ff9c;
+font-size:17px;
+font-weight:600;
 }
 
-button:hover{
-background:#2563eb;
+button:active{
+transform:scale(0.97);
 }
 
-.back{
-margin-top:15px;
-background:#334155;
-}
-
-.back:hover{
-background:#475569;
-}
-
-.success{
-display:none;
-text-align:center;
-font-size:18px;
-margin-top:20px;
-color:#22c55e;
+.apply{
+background:#00ff9c;
+color:#000;
+font-weight:700;
 }
 
 </style>
@@ -100,54 +103,152 @@ color:#22c55e;
 
 <body>
 
+<pre id="codeBackground"></pre>
+
 <div class="container">
 
-<div class="monkey">🐵</div>
+<div id="terminal"></div>
 
-<h1>인공지능탐구부 지원서</h1>
+<div id="monkey">🐵</div>
 
-<form id="applyForm">
+<div id="chat">
 
-<label>이름</label>
-<input type="text" required>
+<div id="bubble"></div>
 
-<label>학년 / 반</label>
-<input type="text" placeholder="예: 1학년 3반" required>
+<button onclick="ask('intro')">동아리 소개</button>
+<button onclick="ask('plan')">활동 계획</button>
+<button onclick="ask('target')">모집 대상</button>
+<button onclick="ask('apply')">모집 안내</button>
+<button onclick="ask('etc')">기타 문의</button>
 
-<label>전화번호</label>
-<input type="tel" placeholder="010-0000-0000" required>
-
-<label>지원 동기</label>
-<textarea required></textarea>
-
-<label>하고 싶은 프로젝트</label>
-<textarea></textarea>
-
-<button type="submit">지원하기 🚀</button>
-
-</form>
-
-<div class="success" id="success">
-지원이 접수되었습니다!
-</div>
-
-<button class="back" onclick="location.href='index.html'">
-← 메인으로 돌아가기
+<button class="apply" onclick="location.href='apply.html'">
+🚀 지원하기
 </button>
+
+</div>
 
 </div>
 
 <script>
 
-document.getElementById("applyForm").addEventListener("submit",function(e){
+/* 배경 코드 생성 */
 
-e.preventDefault();
+const codeLines = [
+"import ai from 'robotics'",
+"boot.sequence.start()",
+"raspberry.connect()",
+"arduino.initialize()",
+"ai.train(dataset)",
+"neural_network.compile()",
+"system.check()",
+"robot.move()",
+"sensor.scan()",
+"vision.detect()",
+"loop.run()",
+"if(student==curious){ joinClub(); }"
+]
 
-document.getElementById("success").style.display="block";
+let codeText=""
 
-this.reset();
+for(let i=0;i<300;i++){
+codeText += codeLines[Math.floor(Math.random()*codeLines.length)]+"\n"
+}
 
-});
+document.getElementById("codeBackground").innerText = codeText
+
+
+/* 부팅 연출 */
+
+const terminal=document.getElementById("terminal")
+
+const bootLogs=[
+"booting ai system...",
+"loading robotics module...",
+"connecting raspberry pi...",
+"initializing sensors...",
+"starting AI core...",
+"ERROR: monkey_ai_not_found",
+"restarting system...",
+"Complete."
+]
+
+let logIndex=0
+
+function boot(){
+
+if(logIndex<bootLogs.length){
+
+terminal.innerHTML+=bootLogs[logIndex]+"\n"
+
+logIndex++
+
+setTimeout(boot,350)
+
+}else{
+
+setTimeout(showMonkey,700)
+
+}
+
+}
+
+boot()
+
+function showMonkey(){
+
+document.getElementById("monkey").style.display="block"
+document.getElementById("chat").style.display="block"
+
+typeText("안녕! 나는 인공지능탐구부의 마스코트 숭돌이야 🐵 궁금한 걸 눌러봐!")
+
+}
+
+/* 챗봇 */
+
+const answers={
+
+intro:"우리는 AI, 로봇, 프로그래밍을 탐구하는 동아리야.",
+
+plan:"아두이노, 자율주행 자동차, AI 프로젝트 등 다양한 활동을 할 예정이야.",
+
+target:"AI, 컴퓨터, 로봇공학에 관심 있는 학생들을 모집하고 있어!",
+
+apply:"면접은 13일 예정이야. 아래 지원하기 버튼을 눌러 지원서를 작성해!",
+
+etc:"문의: 20509 박진아"
+}
+
+function typeText(text){
+
+const bubble=document.getElementById("bubble")
+
+bubble.innerHTML=""
+
+let i=0
+
+const interval=setInterval(()=>{
+
+bubble.innerHTML+=text[i]
+
+i++
+
+if(i>=text.length)clearInterval(interval)
+
+},25)
+
+}
+
+function ask(key){
+
+typeText("숭돌이 생각중...")
+
+setTimeout(()=>{
+
+typeText(answers[key])
+
+},800)
+
+}
 
 </script>
 
