@@ -4,14 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>숭돌이 AI 동아리 지원서</title>
+<title>인공지능탐구부 지원</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
 
 body{
-background:#0b0f14;
+background:#0a0f14;
 font-family:'Pretendard',sans-serif;
 color:white;
 margin:0;
@@ -25,26 +25,18 @@ width:100%;
 max-width:500px;
 background:#111823;
 padding:30px;
-border-radius:20px;
-box-shadow:0 0 30px rgba(0,255,150,0.2);
+border-radius:16px;
+box-shadow:0 0 20px rgba(0,255,150,0.2);
 }
 
 h1{
 text-align:center;
-margin-bottom:20px;
 }
 
 .monkey{
 font-size:60px;
 text-align:center;
 margin-bottom:10px;
-animation:float 3s ease-in-out infinite;
-}
-
-@keyframes float{
-0%{transform:translateY(0)}
-50%{transform:translateY(-10px)}
-100%{transform:translateY(0)}
 }
 
 input, textarea{
@@ -56,7 +48,6 @@ border-radius:10px;
 border:1px solid #2cffb0;
 background:#0b0f14;
 color:white;
-font-size:14px;
 
 }
 
@@ -65,29 +56,24 @@ button{
 width:100%;
 padding:14px;
 margin-top:12px;
-border-radius:12px;
+border-radius:10px;
 border:none;
 background:#2cffb0;
 color:black;
 font-weight:600;
 cursor:pointer;
-transition:0.2s;
 
 }
 
-button:hover{
-transform:scale(1.03);
-}
-
-.backBtn{
-background:transparent;
+.back{
+background:none;
 border:1px solid #2cffb0;
 color:#2cffb0;
 margin-bottom:10px;
 }
 
 #status{
-margin-top:15px;
+margin-top:12px;
 text-align:center;
 color:#2cffb0;
 }
@@ -99,11 +85,11 @@ color:#2cffb0;
 
 <div class="container">
 
-<button class="backBtn" onclick="goBack()">← 돌아가기</button>
+<button class="back" onclick="location.href='index.html'">← 돌아가기</button>
 
-<div class="monkey">🤖🐵</div>
+<div class="monkey">🐵</div>
 
-<h1>AI 로봇 동아리 지원</h1>
+<h1>지원서 작성</h1>
 
 <form id="applyForm">
 
@@ -113,7 +99,7 @@ color:#2cffb0;
 
 <textarea id="activity" placeholder="동아리에서 하고 싶은 활동"></textarea>
 
-<button type="submit">지원서 제출 🚀</button>
+<button type="submit">지원서 제출</button>
 
 </form>
 
@@ -139,48 +125,34 @@ measurementId: "G-RXEHB4X3TW"
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-const form = document.getElementById("applyForm")
+const form=document.getElementById("applyForm")
 
-form.addEventListener("submit", async (e)=>{
+form.addEventListener("submit", async(e)=>{
 
 e.preventDefault()
 
-const name = document.getElementById("name").value
-const studentId = document.getElementById("studentId").value
-const dream = document.getElementById("dream").value
-const activity = document.getElementById("activity").value
+const name=document.getElementById("name").value
+const studentId=document.getElementById("studentId").value
+const dream=document.getElementById("dream").value
+const activity=document.getElementById("activity").value
 
-document.getElementById("status").innerText="지원서 업로드 중..."
-
-try{
+document.getElementById("status").innerText="업로드 중..."
 
 await addDoc(collection(db,"applications"),{
+
 name,
 studentId,
 dream,
 activity,
-time: new Date()
+time:new Date()
+
 })
 
-document.getElementById("status").innerText="지원 완료! 면접에서 보자 🐵"
+document.getElementById("status").innerText="지원 완료! 🐵"
 
 form.reset()
 
-}catch(err){
-
-document.getElementById("status").innerText="오류 발생 😢"
-
-}
-
 })
-
-</script>
-
-<script>
-
-function goBack(){
-window.location.href="index.html"
-}
 
 </script>
 
