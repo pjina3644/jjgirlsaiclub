@@ -1,155 +1,56 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>인공지능탐구부 지원서</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700&display=swap" rel="stylesheet">
-
-<style>
-
-body{
-margin:0;
-font-family:'Pretendard',sans-serif;
-background:linear-gradient(135deg,#0f172a,#1e293b);
-color:white;
-padding:20px;
-}
-
-.container{
-max-width:600px;
-margin:auto;
-}
-
-h1{
-text-align:center;
-font-size:28px;
-margin-bottom:25px;
-}
-
-.monkey{
-font-size:70px;
-text-align:center;
-margin-bottom:10px;
-}
-
-form{
-display:flex;
-flex-direction:column;
-gap:15px;
-}
-
-label{
-font-size:15px;
-opacity:0.9;
-}
-
-input,textarea{
-width:100%;
-padding:14px;
-font-size:16px;
-border-radius:10px;
-border:none;
-outline:none;
-background:#1e293b;
-color:white;
-}
-
-textarea{
-min-height:120px;
-resize:vertical;
-}
-
-button{
-margin-top:10px;
-padding:16px;
-font-size:18px;
-font-weight:600;
-border:none;
-border-radius:12px;
-background:#3b82f6;
-color:white;
-cursor:pointer;
-}
-
-button:hover{
-background:#2563eb;
-}
-
-.back{
-margin-top:15px;
-background:#334155;
-}
-
-.back:hover{
-background:#475569;
-}
-
-.success{
-display:none;
-text-align:center;
-font-size:18px;
-margin-top:20px;
-color:#22c55e;
-}
-
-</style>
-</head>
-
-<body>
-
-<div class="container">
-
-<div class="monkey">🐵</div>
-
-<h1>인공지능탐구부 지원서</h1>
-
 <form id="applyForm">
-
-<label>이름</label>
-<input type="text" required>
-
-<label>학번</label>
-<input type="text" placeholder="예: 20509" required>
-
-<label>전화번호</label>
-<input type="tel" placeholder="예: 010-0000-0000" required>
-
-<label>희망 진로(탐구중 가능)</label>
-<textarea required></textarea>
-
-<label>하고 싶은 프로젝트</label>
-<textarea></textarea>
-
-<button type="submit">🚀 지원하기 🚀</button>
-
+  <input id="name" placeholder="이름" required>
+  <input id="student" placeholder="학번" required>
+  <input id="phone" placeholder="전화번호" required>
+  <input id="reason" placeholder="지원 이유" required>
+  <input id="project" placeholder="프로젝트" required>
+  <button type="submit">제출</button>
 </form>
 
-<div class="success" id="success">
-지원이 접수되었습니다!
-</div>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
 
-<button class="back" onclick="location.href='index.html'">
-← 메인으로 돌아가기
-</button>
+const firebaseConfig = {
+  apiKey: "AIzaSyBMquwGMX__QpGyK62NDC64EdrKnLu3Dxk",
+  authDomain: "club-ca1bf.firebaseapp.com",
+  projectId: "club-ca1bf",
+  storageBucket: "club-ca1bf.firebasestorage.app",
+  messagingSenderId: "396844667638",
+  appId: "1:396844667638:web:794d61d7b21009281ed2d7",
+  measurementId: "G-RXEHB4X3TW"
+};
 
-</div>
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-<script>
+const form = document.getElementById("applyForm");
 
-document.getElementById("applyForm").addEventListener("submit",function(e){
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-e.preventDefault();
+  const name = document.getElementById("name").value;
+  const student = document.getElementById("student").value;
+  const phone = document.getElementById("phone").value;
+  const reason = document.getElementById("reason").value;
+  const project = document.getElementById("project").value;
 
-document.getElementById("success").style.display="block";
+  console.log({name, student, phone, reason, project}); // 값 확인용
 
-this.reset();
-
+  try {
+    await addDoc(collection(db, "applications"), {
+      name,
+      student,
+      phone,
+      reason,
+      project,
+      time: new Date()
+    });
+    alert("지원이 정상적으로 접수되었습니다!");
+    form.reset();
+  } catch (error) {
+    console.error(error);
+    alert("저장 실패: " + error.message);
+  }
 });
-
 </script>
-
-</body>
-</html>
