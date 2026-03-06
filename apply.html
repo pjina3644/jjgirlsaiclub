@@ -2,80 +2,63 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>인공지능탐구부 지원</title>
+<title>지원서 작성</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
 
 body{
-background:#0a0f14;
-font-family:'Pretendard',sans-serif;
-color:white;
 margin:0;
-padding:30px;
+height:100vh;
+background:linear-gradient(135deg,#05060f,#0a0f2b);
 display:flex;
 justify-content:center;
+align-items:center;
+font-family:Pretendard;
+color:white;
 }
 
 .container{
-width:100%;
-max-width:500px;
-background:#111823;
-padding:30px;
-border-radius:16px;
-box-shadow:0 0 20px rgba(0,255,150,0.2);
+background:rgba(255,255,255,0.05);
+padding:40px;
+border-radius:20px;
+width:350px;
+backdrop-filter:blur(10px);
 }
 
-h1{
+h2{
 text-align:center;
+margin-bottom:20px;
 }
 
-.monkey{
-font-size:60px;
-text-align:center;
-margin-bottom:10px;
-}
-
-input, textarea{
-
+input,textarea{
 width:100%;
-padding:12px;
-margin:10px 0;
+padding:10px;
+margin:8px 0;
+border:none;
 border-radius:10px;
-border:1px solid #2cffb0;
-background:#0b0f14;
-color:white;
-
 }
 
 button{
-
 width:100%;
-padding:14px;
-margin-top:12px;
-border-radius:10px;
+padding:12px;
+margin-top:10px;
 border:none;
-background:#2cffb0;
-color:black;
-font-weight:600;
+border-radius:20px;
+background:#00ff9d;
+font-size:16px;
 cursor:pointer;
-
 }
 
 .back{
-background:none;
-border:1px solid #2cffb0;
-color:#2cffb0;
-margin-bottom:10px;
+background:#555;
 }
 
-#status{
-margin-top:12px;
+.monkey{
 text-align:center;
-color:#2cffb0;
+font-size:50px;
+margin-bottom:10px;
 }
 
 </style>
@@ -85,76 +68,25 @@ color:#2cffb0;
 
 <div class="container">
 
-<button class="back" onclick="location.href='index.html'">← 돌아가기</button>
-
 <div class="monkey">🐵</div>
 
-<h1>지원서 작성</h1>
+<h2>동아리 지원서</h2>
 
-<form id="applyForm">
+<input placeholder="이름">
 
-<input id="name" placeholder="이름" required>
-<input id="studentId" placeholder="학번" required>
-<input id="dream" placeholder="희망 진로">
+<input placeholder="학번">
 
-<textarea id="activity" placeholder="동아리에서 하고 싶은 활동"></textarea>
+<input placeholder="전화번호">
 
-<button type="submit">지원서 제출</button>
+<textarea placeholder="지원 동기"></textarea>
 
-</form>
+<button>지원서 제출</button>
 
-<div id="status"></div>
+<button class="back" onclick="location.href='index.html'">
+돌아가기
+</button>
 
 </div>
-
-<script type="module">
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
-import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
-
-const firebaseConfig = {
-apiKey: "AIzaSyBMquwGMX__QpGyK62NDC64EdrKnLu3Dxk",
-authDomain: "club-ca1bf.firebaseapp.com",
-projectId: "club-ca1bf",
-storageBucket: "club-ca1bf.firebasestorage.app",
-messagingSenderId: "396844667638",
-appId: "1:396844667638:web:794d61d7b21009281ed2d7",
-measurementId: "G-RXEHB4X3TW"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-const form=document.getElementById("applyForm")
-
-form.addEventListener("submit", async(e)=>{
-
-e.preventDefault()
-
-const name=document.getElementById("name").value
-const studentId=document.getElementById("studentId").value
-const dream=document.getElementById("dream").value
-const activity=document.getElementById("activity").value
-
-document.getElementById("status").innerText="업로드 중..."
-
-await addDoc(collection(db,"applications"),{
-
-name,
-studentId,
-dream,
-activity,
-time:new Date()
-
-})
-
-document.getElementById("status").innerText="지원 완료! 🐵"
-
-form.reset()
-
-})
-
-</script>
 
 </body>
 </html>
