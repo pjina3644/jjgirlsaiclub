@@ -2,63 +2,97 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>지원서 작성</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600&display=swap" rel="stylesheet">
+<title>인공지능탐구부 지원</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
 
 body{
 margin:0;
-height:100vh;
-background:linear-gradient(135deg,#05060f,#0a0f2b);
-display:flex;
-justify-content:center;
-align-items:center;
-font-family:Pretendard;
+font-family:'Pretendard',sans-serif;
+background:linear-gradient(135deg,#0f172a,#1e293b);
 color:white;
+padding:20px;
 }
 
 .container{
-background:rgba(255,255,255,0.05);
-padding:40px;
-border-radius:20px;
-width:350px;
-backdrop-filter:blur(10px);
+max-width:600px;
+margin:auto;
 }
 
-h2{
+h1{
 text-align:center;
-margin-bottom:20px;
+font-size:28px;
+margin-bottom:25px;
+}
+
+.monkey{
+font-size:70px;
+text-align:center;
+margin-bottom:10px;
+}
+
+form{
+display:flex;
+flex-direction:column;
+gap:15px;
+}
+
+label{
+font-size:15px;
+opacity:0.9;
 }
 
 input,textarea{
 width:100%;
-padding:10px;
-margin:8px 0;
-border:none;
+padding:14px;
+font-size:16px;
 border-radius:10px;
+border:none;
+outline:none;
+background:#1e293b;
+color:white;
+}
+
+textarea{
+min-height:120px;
+resize:vertical;
 }
 
 button{
-width:100%;
-padding:12px;
 margin-top:10px;
+padding:16px;
+font-size:18px;
+font-weight:600;
 border:none;
-border-radius:20px;
-background:#00ff9d;
-font-size:16px;
+border-radius:12px;
+background:#3b82f6;
+color:white;
 cursor:pointer;
 }
 
-.back{
-background:#555;
+button:hover{
+background:#2563eb;
 }
 
-.monkey{
+.back{
+margin-top:15px;
+background:#334155;
+}
+
+.back:hover{
+background:#475569;
+}
+
+.success{
+display:none;
 text-align:center;
-font-size:50px;
-margin-bottom:10px;
+font-size:18px;
+margin-top:20px;
+color:#22c55e;
 }
 
 </style>
@@ -70,23 +104,52 @@ margin-bottom:10px;
 
 <div class="monkey">🐵</div>
 
-<h2>동아리 지원서</h2>
+<h1>인공지능탐구부 지원서</h1>
 
-<input placeholder="이름">
+<form id="applyForm">
 
-<input placeholder="학번">
+<label>이름</label>
+<input type="text" required>
 
-<input placeholder="전화번호">
+<label>학년 / 반</label>
+<input type="text" placeholder="예: 1학년 3반" required>
 
-<textarea placeholder="지원 동기"></textarea>
+<label>전화번호</label>
+<input type="tel" placeholder="010-0000-0000" required>
 
-<button>지원서 제출</button>
+<label>지원 동기</label>
+<textarea required></textarea>
+
+<label>하고 싶은 프로젝트</label>
+<textarea></textarea>
+
+<button type="submit">지원하기 🚀</button>
+
+</form>
+
+<div class="success" id="success">
+지원이 접수되었습니다!
+</div>
 
 <button class="back" onclick="location.href='index.html'">
-돌아가기
+← 메인으로 돌아가기
 </button>
 
 </div>
+
+<script>
+
+document.getElementById("applyForm").addEventListener("submit",function(e){
+
+e.preventDefault();
+
+document.getElementById("success").style.display="block";
+
+this.reset();
+
+});
+
+</script>
 
 </body>
 </html>
