@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>인공지능탐구부</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600&family=Fira+Code&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700&family=Fira+Code&display=swap" rel="stylesheet">
 
 <style>
 
@@ -15,7 +16,7 @@ margin:0;
 background:#05060f;
 color:white;
 font-family:Pretendard;
-overflow:hidden;
+overflow-x:hidden;
 }
 
 /* 배경 코드 */
@@ -26,91 +27,113 @@ top:0;
 left:0;
 width:100%;
 height:100%;
-color:#00ff9d;
 font-family:"Fira Code";
-font-size:14px;
-opacity:0.25;
+font-size:12px;
+color:#00ff9d;
+opacity:0.15;
 white-space:pre-wrap;
-padding:25px;
+padding:15px;
+pointer-events:none;
 }
 
 /* 메인 */
 
 #main{
-position:absolute;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
+
+padding:40px 20px;
+max-width:520px;
+margin:auto;
 text-align:center;
 display:none;
-width:90%;
+
 }
 
 /* 원숭이 */
 
 .monkey{
-font-size:80px;
+
+font-size:150px;
 margin-bottom:10px;
-animation:bounce 2s infinite;
+animation:float 2.5s infinite;
+
 }
 
 /* 제목 */
 
 h1{
+
 font-size:34px;
-margin-bottom:5px;
+margin:10px 0;
+
 }
 
-p{
+.sub{
+
 opacity:0.8;
-margin-bottom:20px;
+margin-bottom:25px;
+
 }
 
-/* 챗봇 */
+/* 챗봇 말풍선 */
 
 #bubble{
-background:rgba(0,0,0,0.7);
-padding:18px;
-border-radius:16px;
-min-height:60px;
+
+background:rgba(0,0,0,0.65);
+padding:22px;
+border-radius:18px;
 margin-bottom:15px;
-font-size:16px;
+font-size:17px;
+line-height:1.5;
+
 }
 
 /* 버튼 */
 
 button{
+
 width:100%;
-padding:16px;
-margin:6px 0;
-font-size:16px;
+padding:20px;
+margin:7px 0;
+font-size:18px;
+border-radius:18px;
 border:none;
-border-radius:14px;
 background:#00ff9d;
 font-weight:600;
+
 }
 
 button:active{
+
 transform:scale(0.96);
+
 }
 
 /* 애니메이션 */
 
-@keyframes bounce{
+@keyframes float{
+
 0%,100%{transform:translateY(0)}
-50%{transform:translateY(-8px)}
+50%{transform:translateY(-12px)}
+
 }
 
+/* 반짝이 */
+
 .spark{
-position:absolute;
-font-size:20px;
-animation:spark 3s infinite;
+
+position:fixed;
+font-size:18px;
+animation:spark 4s infinite;
+pointer-events:none;
+
 }
 
 @keyframes spark{
+
 0%{opacity:0;transform:scale(0)}
 50%{opacity:1}
 100%{opacity:0}
+
 }
 
 </style>
@@ -125,50 +148,64 @@ animation:spark 3s infinite;
 <div class="monkey">🐵</div>
 
 <h1>인공지능탐구부</h1>
-<p>AI · 코딩 · 피지컬컴퓨팅 동아리</p>
+
+<div class="sub">
+AI · 코딩 · 피지컬컴퓨팅 동아리
+</div>
 
 <div id="bubble">
-안녕! 나는 동아리 안내 AI 숭돌이야 🐵
+
+안녕! 나는 안내 AI 숭돌이야 🐵  
 궁금한 걸 눌러봐!
+
 </div>
 
 <button onclick="ask('intro')">동아리 소개</button>
+
 <button onclick="ask('plan')">활동 계획</button>
+
 <button onclick="ask('target')">모집 대상</button>
+
 <button onclick="ask('apply')">모집 일정</button>
-<button onclick="location.href='apply.html'">지원하기 🚀</button>
+
+<button onclick="location.href='apply.html'">
+지원하기 🚀
+</button>
 
 </div>
 
 <script>
 
-/* 코드 타이핑 */
+/* 코드 연출 */
 
 const codeText = `
-booting ai system...
-loading python modules...
+
+booting AI club system...
+
 import robotics
 import machine_learning
+import creativity
 
 initializing raspberry pi...
-starting neural network...
+loading neural network...
 connecting sensors...
 
-AI club system ready
+system ready
 
 >>> COMPLETE
-`;
+
+`
 
 let i=0
 
 function typing(){
 
-document.getElementById("code").innerText+=codeText[i]
+document.getElementById("code").innerText += codeText[i]
 i++
 
 if(i<codeText.length){
 
-setTimeout(typing,25)
+setTimeout(typing,20)
 
 }else{
 
@@ -190,9 +227,10 @@ intro:"인공지능탐구부는 AI, 코딩, 피지컬컴퓨팅을 탐구하는 �
 
 plan:"아두이노, 자율주행 키트, AI 프로젝트 등 다양한 활동을 할 예정이야!",
 
-target:"공학, 컴퓨터, 게임개발 등에 관심 있는 학생들을 모집해!",
+target:"컴퓨터공학, 로봇공학, 게임개발 등에 관심 있는 학생들을 모집해!",
 
 apply:"면접은 3월 13일 예정이야!"
+
 }
 
 function ask(key){
@@ -202,17 +240,21 @@ const bubble=document.getElementById("bubble")
 bubble.innerText="숭돌이 생각중..."
 
 setTimeout(()=>{
+
 bubble.innerText=answers[key]
-},800)
+
+},700)
 
 }
 
-/* 반짝이 */
+/* 반짝이 효과 */
 
-for(let i=0;i<20;i++){
+for(let i=0;i<30;i++){
 
 let s=document.createElement("div")
+
 s.className="spark"
+
 s.innerText="✨"
 
 s.style.left=Math.random()*100+"%"
