@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <title>인공지능탐구부</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Pretendard:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&family=Pretendard:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
 
@@ -19,15 +19,13 @@ font-family:Pretendard;
 
 #code{
 position:absolute;
-top:0;
-left:0;
 width:100%;
 height:100%;
 font-family:"Fira Code";
 font-size:14px;
 color:#00ff9d;
 white-space:pre-wrap;
-opacity:0.3;
+opacity:0.25;
 padding:40px;
 }
 
@@ -66,6 +64,30 @@ button:hover{
 transform:scale(1.05);
 }
 
+#chatbot{
+position:fixed;
+bottom:20px;
+right:20px;
+width:260px;
+background:rgba(0,0,0,0.7);
+border-radius:15px;
+padding:15px;
+font-size:14px;
+}
+
+#chatlog{
+height:120px;
+overflow:auto;
+margin-bottom:10px;
+}
+
+input{
+width:100%;
+padding:8px;
+border:none;
+border-radius:8px;
+}
+
 .sparkle{
 position:absolute;
 font-size:20px;
@@ -91,13 +113,25 @@ animation:spark 3s infinite;
 <div id="code"></div>
 
 <div id="main">
+
 <div class="monkey">🐵</div>
+
 <h1>인공지능탐구부</h1>
-<p>AI와 코딩을 탐구하는 동아리</p>
+<p>AI · 코딩 · 피지컬컴퓨팅 탐구 동아리</p>
 
 <button onclick="location.href='apply.html'">
 지원하기
 </button>
+
+</div>
+
+<div id="chatbot">
+
+<div id="chatlog">
+🐵 숭돌이: 궁금한걸 물어봐!
+</div>
+
+<input id="chatInput" placeholder="질문 입력..." onkeydown="chat(event)">
 
 </div>
 
@@ -107,11 +141,11 @@ const codeText = `
 import AI from "future";
 
 function createAI(){
-   let intelligence = true;
    let curiosity = true;
+   let coding = true;
 
-   if(intelligence && curiosity){
-      return "AI Club Activated";
+   if(curiosity && coding){
+      return "AI Club Ready";
    }
 }
 
@@ -122,7 +156,7 @@ class Student{
    }
 }
 
-let club = [];
+let club=[];
 
 for(let i=0;i<10;i++){
    club.push(new Student("member"));
@@ -134,10 +168,10 @@ console.log(createAI());
 let i=0;
 
 function typing(){
-document.getElementById("code").innerText += codeText[i];
+document.getElementById("code").innerText+=codeText[i];
 i++;
 
-if(i < codeText.length){
+if(i<codeText.length){
 setTimeout(typing,20);
 }else{
 setTimeout(()=>{
@@ -158,6 +192,37 @@ s.style.left=Math.random()*100+"%";
 s.style.top=Math.random()*100+"%";
 
 document.body.appendChild(s);
+}
+
+function chat(e){
+
+if(e.key==="Enter"){
+
+let input=document.getElementById("chatInput").value;
+let log=document.getElementById("chatlog");
+
+let answer="음... 잘 모르겠어";
+
+if(input.includes("지원"))
+answer="지원은 위의 지원하기 버튼을 눌러줘!";
+
+if(input.includes("활동"))
+answer="AI, 코딩, 피지컬컴퓨팅 프로젝트를 해!";
+
+if(input.includes("언제"))
+answer="방과후에 활동해!";
+
+if(input.includes("어려"))
+answer="초보도 환영이야!";
+
+log.innerHTML+=`<br>👤 ${input}`;
+log.innerHTML+=`<br>🐵 ${answer}`;
+
+document.getElementById("chatInput").value="";
+log.scrollTop=log.scrollHeight;
+
+}
+
 }
 
 </script>
