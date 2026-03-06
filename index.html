@@ -1,139 +1,98 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>인공지능탐구부</title>
+<title>인공지능탐구부 지원</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700&family=Fira+Code&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
 
 body{
 margin:0;
-background:#05060f;
+font-family:'Pretendard',sans-serif;
+background:linear-gradient(135deg,#0f172a,#1e293b);
 color:white;
-font-family:Pretendard;
-overflow-x:hidden;
+padding:20px;
 }
 
-/* 배경 코드 */
-
-#code{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-font-family:"Fira Code";
-font-size:12px;
-color:#00ff9d;
-opacity:0.15;
-white-space:pre-wrap;
-padding:15px;
-pointer-events:none;
-}
-
-/* 메인 */
-
-#main{
-
-padding:40px 20px;
-max-width:520px;
+.container{
+max-width:600px;
 margin:auto;
-text-align:center;
-display:none;
-
 }
-
-/* 원숭이 */
-
-.monkey{
-
-font-size:150px;
-margin-bottom:10px;
-animation:float 2.5s infinite;
-
-}
-
-/* 제목 */
 
 h1{
-
-font-size:34px;
-margin:10px 0;
-
-}
-
-.sub{
-
-opacity:0.8;
+text-align:center;
+font-size:28px;
 margin-bottom:25px;
-
 }
 
-/* 챗봇 말풍선 */
-
-#bubble{
-
-background:rgba(0,0,0,0.65);
-padding:22px;
-border-radius:18px;
-margin-bottom:15px;
-font-size:17px;
-line-height:1.5;
-
+.monkey{
+font-size:70px;
+text-align:center;
+margin-bottom:10px;
 }
 
-/* 버튼 */
+form{
+display:flex;
+flex-direction:column;
+gap:15px;
+}
+
+label{
+font-size:15px;
+opacity:0.9;
+}
+
+input,textarea{
+width:100%;
+padding:14px;
+font-size:16px;
+border-radius:10px;
+border:none;
+outline:none;
+background:#1e293b;
+color:white;
+}
+
+textarea{
+min-height:120px;
+resize:vertical;
+}
 
 button{
-
-width:100%;
-padding:20px;
-margin:7px 0;
+margin-top:10px;
+padding:16px;
 font-size:18px;
-border-radius:18px;
-border:none;
-background:#00ff9d;
 font-weight:600;
-
+border:none;
+border-radius:12px;
+background:#3b82f6;
+color:white;
+cursor:pointer;
 }
 
-button:active{
-
-transform:scale(0.96);
-
+button:hover{
+background:#2563eb;
 }
 
-/* 애니메이션 */
-
-@keyframes float{
-
-0%,100%{transform:translateY(0)}
-50%{transform:translateY(-12px)}
-
+.back{
+margin-top:15px;
+background:#334155;
 }
 
-/* 반짝이 */
+.back:hover{
+background:#475569;
+}
 
-.spark{
-
-position:fixed;
+.success{
+display:none;
+text-align:center;
 font-size:18px;
-animation:spark 4s infinite;
-pointer-events:none;
-
-}
-
-@keyframes spark{
-
-0%{opacity:0;transform:scale(0)}
-50%{opacity:1}
-100%{opacity:0}
-
+margin-top:20px;
+color:#22c55e;
 }
 
 </style>
@@ -141,128 +100,54 @@ pointer-events:none;
 
 <body>
 
-<div id="code"></div>
-
-<div id="main">
+<div class="container">
 
 <div class="monkey">🐵</div>
 
-<h1>인공지능탐구부</h1>
+<h1>인공지능탐구부 지원서</h1>
 
-<div class="sub">
-AI · 코딩 · 피지컬컴퓨팅 동아리
+<form id="applyForm">
+
+<label>이름</label>
+<input type="text" required>
+
+<label>학년 / 반</label>
+<input type="text" placeholder="예: 1학년 3반" required>
+
+<label>전화번호</label>
+<input type="tel" placeholder="010-0000-0000" required>
+
+<label>지원 동기</label>
+<textarea required></textarea>
+
+<label>하고 싶은 프로젝트</label>
+<textarea></textarea>
+
+<button type="submit">지원하기 🚀</button>
+
+</form>
+
+<div class="success" id="success">
+지원이 접수되었습니다!
 </div>
 
-<div id="bubble">
-
-안녕! 나는 안내 AI 숭돌이야 🐵  
-궁금한 걸 눌러봐!
-
-</div>
-
-<button onclick="ask('intro')">동아리 소개</button>
-
-<button onclick="ask('plan')">활동 계획</button>
-
-<button onclick="ask('target')">모집 대상</button>
-
-<button onclick="ask('apply')">모집 일정</button>
-
-<button onclick="location.href='apply.html'">
-지원하기 🚀
+<button class="back" onclick="location.href='index.html'">
+← 메인으로 돌아가기
 </button>
 
 </div>
 
 <script>
 
-/* 코드 연출 */
+document.getElementById("applyForm").addEventListener("submit",function(e){
 
-const codeText = `
+e.preventDefault();
 
-booting AI club system...
+document.getElementById("success").style.display="block";
 
-import robotics
-import machine_learning
-import creativity
+this.reset();
 
-initializing raspberry pi...
-loading neural network...
-connecting sensors...
-
-system ready
-
->>> COMPLETE
-
-`
-
-let i=0
-
-function typing(){
-
-document.getElementById("code").innerText += codeText[i]
-i++
-
-if(i<codeText.length){
-
-setTimeout(typing,20)
-
-}else{
-
-setTimeout(()=>{
-document.getElementById("main").style.display="block"
-},500)
-
-}
-
-}
-
-typing()
-
-/* 챗봇 답변 */
-
-const answers={
-
-intro:"인공지능탐구부는 AI, 코딩, 피지컬컴퓨팅을 탐구하는 동아리야!",
-
-plan:"아두이노, 자율주행 키트, AI 프로젝트 등 다양한 활동을 할 예정이야!",
-
-target:"컴퓨터공학, 로봇공학, 게임개발 등에 관심 있는 학생들을 모집해!",
-
-apply:"면접은 3월 13일 예정이야!"
-
-}
-
-function ask(key){
-
-const bubble=document.getElementById("bubble")
-
-bubble.innerText="숭돌이 생각중..."
-
-setTimeout(()=>{
-
-bubble.innerText=answers[key]
-
-},700)
-
-}
-
-/* 반짝이 효과 */
-
-for(let i=0;i<30;i++){
-
-let s=document.createElement("div")
-
-s.className="spark"
-
-s.innerText="✨"
-
-s.style.left=Math.random()*100+"%"
-s.style.top=Math.random()*100+"%"
-
-document.body.appendChild(s)
-
-}
+});
 
 </script>
 
