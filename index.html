@@ -2,32 +2,39 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>인공지능탐구부</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Fira+Code&family=Pretendard:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600&family=Fira+Code&display=swap" rel="stylesheet">
 
 <style>
 
 body{
 margin:0;
-height:100vh;
-overflow:hidden;
 background:#05060f;
 color:white;
 font-family:Pretendard;
+overflow:hidden;
 }
 
+/* 배경 코드 */
+
 #code{
-position:absolute;
+position:fixed;
+top:0;
+left:0;
 width:100%;
 height:100%;
+color:#00ff9d;
 font-family:"Fira Code";
 font-size:14px;
-color:#00ff9d;
-white-space:pre-wrap;
 opacity:0.25;
-padding:40px;
+white-space:pre-wrap;
+padding:25px;
 }
+
+/* 메인 */
 
 #main{
 position:absolute;
@@ -35,73 +42,74 @@ top:50%;
 left:50%;
 transform:translate(-50%,-50%);
 text-align:center;
-opacity:0;
-transition:1s;
+display:none;
+width:90%;
 }
 
-h1{
-font-size:48px;
-margin-bottom:10px;
-}
+/* 원숭이 */
 
 .monkey{
-font-size:90px;
+font-size:80px;
+margin-bottom:10px;
 animation:bounce 2s infinite;
 }
 
+/* 제목 */
+
+h1{
+font-size:34px;
+margin-bottom:5px;
+}
+
+p{
+opacity:0.8;
+margin-bottom:20px;
+}
+
+/* 챗봇 */
+
+#bubble{
+background:rgba(0,0,0,0.7);
+padding:18px;
+border-radius:16px;
+min-height:60px;
+margin-bottom:15px;
+font-size:16px;
+}
+
+/* 버튼 */
+
 button{
-margin-top:20px;
-padding:15px 40px;
+width:100%;
+padding:16px;
+margin:6px 0;
+font-size:16px;
 border:none;
-border-radius:30px;
+border-radius:14px;
 background:#00ff9d;
-font-size:18px;
-cursor:pointer;
 font-weight:600;
 }
 
-button:hover{
-transform:scale(1.05);
+button:active{
+transform:scale(0.96);
 }
 
-#chatbot{
-position:fixed;
-bottom:20px;
-right:20px;
-width:260px;
-background:rgba(0,0,0,0.7);
-border-radius:15px;
-padding:15px;
-font-size:14px;
+/* 애니메이션 */
+
+@keyframes bounce{
+0%,100%{transform:translateY(0)}
+50%{transform:translateY(-8px)}
 }
 
-#chatlog{
-height:120px;
-overflow:auto;
-margin-bottom:10px;
-}
-
-input{
-width:100%;
-padding:8px;
-border:none;
-border-radius:8px;
-}
-
-.sparkle{
+.spark{
 position:absolute;
 font-size:20px;
 animation:spark 3s infinite;
 }
 
-@keyframes bounce{
-0%,100%{transform:translateY(0)}
-50%{transform:translateY(-10px)}
-}
-
 @keyframes spark{
 0%{opacity:0;transform:scale(0)}
-50%{opacity:1;transform:scale(1)}
+50%{opacity:1}
 100%{opacity:0}
 }
 
@@ -117,111 +125,100 @@ animation:spark 3s infinite;
 <div class="monkey">🐵</div>
 
 <h1>인공지능탐구부</h1>
-<p>AI · 코딩 · 피지컬컴퓨팅 탐구 동아리</p>
+<p>AI · 코딩 · 피지컬컴퓨팅 동아리</p>
 
-<button onclick="location.href='apply.html'">
-지원하기
-</button>
-
+<div id="bubble">
+안녕! 나는 동아리 안내 AI 숭돌이야 🐵
+궁금한 걸 눌러봐!
 </div>
 
-<div id="chatbot">
-
-<div id="chatlog">
-🐵 숭돌이: 궁금한걸 물어봐!
-</div>
-
-<input id="chatInput" placeholder="질문 입력..." onkeydown="chat(event)">
+<button onclick="ask('intro')">동아리 소개</button>
+<button onclick="ask('plan')">활동 계획</button>
+<button onclick="ask('target')">모집 대상</button>
+<button onclick="ask('apply')">모집 일정</button>
+<button onclick="location.href='apply.html'">지원하기 🚀</button>
 
 </div>
 
 <script>
 
+/* 코드 타이핑 */
+
 const codeText = `
-import AI from "future";
+booting ai system...
+loading python modules...
+import robotics
+import machine_learning
 
-function createAI(){
-   let curiosity = true;
-   let coding = true;
+initializing raspberry pi...
+starting neural network...
+connecting sensors...
 
-   if(curiosity && coding){
-      return "AI Club Ready";
-   }
-}
+AI club system ready
 
-class Student{
-   constructor(name){
-      this.name = name;
-      this.skill = "learning";
-   }
-}
-
-let club=[];
-
-for(let i=0;i<10;i++){
-   club.push(new Student("member"));
-}
-
-console.log(createAI());
+>>> COMPLETE
 `;
 
-let i=0;
+let i=0
 
 function typing(){
-document.getElementById("code").innerText+=codeText[i];
-i++;
+
+document.getElementById("code").innerText+=codeText[i]
+i++
 
 if(i<codeText.length){
-setTimeout(typing,20);
+
+setTimeout(typing,25)
+
 }else{
+
 setTimeout(()=>{
-document.getElementById("main").style.opacity=1;
-},500);
-}
+document.getElementById("main").style.display="block"
+},500)
+
 }
 
-typing();
+}
+
+typing()
+
+/* 챗봇 답변 */
+
+const answers={
+
+intro:"인공지능탐구부는 AI, 코딩, 피지컬컴퓨팅을 탐구하는 동아리야!",
+
+plan:"아두이노, 자율주행 키트, AI 프로젝트 등 다양한 활동을 할 예정이야!",
+
+target:"공학, 컴퓨터, 게임개발 등에 관심 있는 학생들을 모집해!",
+
+apply:"면접은 3월 13일 예정이야!"
+}
+
+function ask(key){
+
+const bubble=document.getElementById("bubble")
+
+bubble.innerText="숭돌이 생각중..."
+
+setTimeout(()=>{
+bubble.innerText=answers[key]
+},800)
+
+}
+
+/* 반짝이 */
 
 for(let i=0;i<20;i++){
 
-let s=document.createElement("div");
-s.className="sparkle";
-s.innerText="✨";
+let s=document.createElement("div")
+s.className="spark"
+s.innerText="✨"
 
-s.style.left=Math.random()*100+"%";
-s.style.top=Math.random()*100+"%";
+s.style.left=Math.random()*100+"%"
+s.style.top=Math.random()*100+"%"
 
-document.body.appendChild(s);
-}
-
-function chat(e){
-
-if(e.key==="Enter"){
-
-let input=document.getElementById("chatInput").value;
-let log=document.getElementById("chatlog");
-
-let answer="음... 잘 모르겠어";
-
-if(input.includes("지원"))
-answer="지원은 위의 지원하기 버튼을 눌러줘!";
-
-if(input.includes("활동"))
-answer="AI, 코딩, 피지컬컴퓨팅 프로젝트를 해!";
-
-if(input.includes("언제"))
-answer="방과후에 활동해!";
-
-if(input.includes("어려"))
-answer="초보도 환영이야!";
-
-log.innerHTML+=`<br>👤 ${input}`;
-log.innerHTML+=`<br>🐵 ${answer}`;
-
-document.getElementById("chatInput").value="";
-log.scrollTop=log.scrollHeight;
-
-}
+document.body.appendChild(s)
 
 }
 
