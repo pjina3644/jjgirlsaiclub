@@ -10,12 +10,13 @@
 <style>
 
 body{
-background:#0f172a;
+background:#0b0f1a;
 color:#e2e8f0;
 font-family:'Pretendard',sans-serif;
 margin:0;
 padding:30px;
 text-align:center;
+overflow-x:hidden;
 }
 
 #terminal{
@@ -24,10 +25,27 @@ margin:auto;
 text-align:left;
 white-space:pre-line;
 font-family:monospace;
-color:#22c55e;
+color:#00ff9c;
+border-left:3px solid #00ff9c;
+padding-left:12px;
 }
 
-#robot{
+.sparkle{
+position:fixed;
+width:6px;
+height:6px;
+background:white;
+border-radius:50%;
+animation:spark 3s infinite;
+}
+
+@keyframes spark{
+0%{opacity:0}
+50%{opacity:1}
+100%{opacity:0}
+}
+
+#monkey{
 font-size:90px;
 display:none;
 margin-top:20px;
@@ -36,7 +54,7 @@ animation:float 3s infinite ease-in-out;
 
 @keyframes float{
 0%{transform:translateY(0)}
-50%{transform:translateY(-10px)}
+50%{transform:translateY(-12px)}
 100%{transform:translateY(0)}
 }
 
@@ -47,7 +65,7 @@ margin:30px auto;
 }
 
 #bubble{
-background:#1e293b;
+background:#111827;
 padding:18px;
 border-radius:14px;
 min-height:60px;
@@ -56,12 +74,12 @@ text-align:left;
 }
 
 button{
-background:#2563eb;
-color:white;
-border:none;
+background:#000;
+color:#00ff9c;
+border:1px solid #00ff9c;
 padding:14px;
 margin:6px 0;
-border-radius:10px;
+border-radius:12px;
 width:100%;
 font-size:15px;
 cursor:pointer;
@@ -69,16 +87,14 @@ transition:0.2s;
 }
 
 button:hover{
-background:#1d4ed8;
-transform:scale(1.02);
+transform:scale(1.03);
+box-shadow:0 0 15px #00ff9c;
 }
 
 .applyBtn{
-background:#22c55e;
-}
-
-.applyBtn:hover{
-background:#16a34a;
+background:#00ff9c;
+color:black;
+font-weight:600;
 }
 
 </style>
@@ -88,7 +104,7 @@ background:#16a34a;
 
 <div id="terminal"></div>
 
-<div id="robot">🤖</div>
+<div id="monkey">🤖🐵</div>
 
 <div id="chat">
 
@@ -110,13 +126,13 @@ const terminal=document.getElementById("terminal")
 
 const bootLogs=[
 "booting system...",
-"loading AI module...",
-"connecting robotics kit...",
+"loading robotics module...",
+"connecting AI core...",
 "initializing sensors...",
 "starting Sundol AI...",
 "ERROR: monkey_ai_not_found",
 "system restart...",
-"loading backup AI..."
+"monkey AI detected 🐵"
 ]
 
 let logIndex=0
@@ -132,7 +148,7 @@ setTimeout(boot,350)
 
 }else{
 
-setTimeout(showRobot,800)
+setTimeout(showMonkey,800)
 
 }
 
@@ -140,12 +156,12 @@ setTimeout(showRobot,800)
 
 boot()
 
-function showRobot(){
+function showMonkey(){
 
-document.getElementById("robot").style.display="block"
+document.getElementById("monkey").style.display="block"
 document.getElementById("chat").style.display="block"
 
-typeText("안녕! 나는 동아리 안내 AI '숭돌이'야 🤖 무엇이 궁금해?")
+typeText("안녕! 나는 로봇 원숭이 AI '숭돌이'야 🐵🤖 궁금한걸 눌러봐!")
 
 }
 
@@ -153,7 +169,7 @@ const answers={
 
 intro:"우리는 AI · 로봇 · 코딩을 배우는 공학 동아리야.",
 
-plan:"아두이노, 자율주행 키트, IoT 프로젝트, AI 모델 실습 등을 진행할 예정이야.",
+plan:"아두이노, 자율주행 자동차 키트, IoT 프로젝트, AI 모델 실습 등을 진행할 예정이야.",
 
 target:"컴퓨터공학, AI, 로봇공학 등 공학 분야에 관심 있는 학생을 모집해!",
 
@@ -199,7 +215,29 @@ buttons.forEach(b=>b.disabled=false)
 
 function goApply(){
 
+confetti()
+
+setTimeout(()=>{
 location.href="apply.html"
+},700)
+
+}
+
+function confetti(){
+
+for(let i=0;i<30;i++){
+
+let s=document.createElement("div")
+s.className="sparkle"
+
+s.style.left=Math.random()*100+"vw"
+s.style.top=Math.random()*100+"vh"
+
+document.body.appendChild(s)
+
+setTimeout(()=>s.remove(),3000)
+
+}
 
 }
 

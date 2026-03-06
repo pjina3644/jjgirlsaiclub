@@ -105,7 +105,7 @@ reason:reason,
 time:new Date()
 })
 
-alert("지원 완료!")
+alert("지원 완료!")a
 
 document.getElementById("name").value=""
 document.getElementById("studentId").value=""
@@ -114,6 +114,117 @@ document.getElementById("reason").value=""
 }
 
 </script>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>지원서</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+background:#0b0f1a;
+font-family:'Pretendard';
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+margin:0;
+}
+
+.card{
+background:#111827;
+padding:40px;
+border-radius:16px;
+width:400px;
+color:white;
+box-shadow:0 0 30px rgba(0,255,156,0.2);
+}
+
+h2{
+text-align:center;
+}
+
+input,textarea{
+width:100%;
+padding:10px;
+margin-top:8px;
+margin-bottom:15px;
+background:#000;
+border:1px solid #00ff9c;
+color:#00ff9c;
+border-radius:8px;
+}
+
+button{
+width:100%;
+padding:12px;
+background:#00ff9c;
+border:none;
+border-radius:10px;
+font-weight:600;
+cursor:pointer;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<h2>🐵 숭돌이 동아리 지원</h2>
+
+<input id="name" placeholder="이름">
+<input id="studentId" placeholder="학번">
+<textarea id="reason" placeholder="지원 동기"></textarea>
+
+<button onclick="submitApplication()">지원 제출</button>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
+
+const firebaseConfig = {
+apiKey: "AIzaSyBMquwGMX__QpGyK62NDC64EdrKnLu3Dxk",
+authDomain: "club-ca1bf.firebaseapp.com",
+projectId: "club-ca1bf",
+storageBucket: "club-ca1bf.firebasestorage.app",
+messagingSenderId: "396844667638",
+appId: "1:396844667638:web:794d61d7b21009281ed2d7",
+measurementId: "G-RXEHB4X3TW"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+window.submitApplication = async function(){
+
+const name=document.getElementById("name").value
+const studentId=document.getElementById("studentId").value
+const reason=document.getElementById("reason").value
+
+await addDoc(collection(db,"applications"),{
+
+name:name,
+studentId:studentId,
+reason:reason,
+time:new Date()
+
+})
+
+alert("지원 완료! 🐵")
+
+}
+
+</script>
+
+</body>
+</html>
 </body>
 </html>
